@@ -205,9 +205,40 @@ make core-up
 | `xian-core/` | Xian ABCI application |
 | `xian-contracting/` | Python contracting engine |
 
+## Test Your Node
+
+After syncing, verify your node works with [xian-py](https://github.com/xian-network/xian-py):
+
+```bash
+pip install xian-py
+```
+
+```python
+from xian_py import Xian, Wallet
+
+# Connect to your local node
+xian = Xian('http://localhost:26657')
+
+# Query balance
+balance = xian.get_balance('your_address')
+print(f"Balance: {balance}")
+
+# Get contract state
+state = xian.get_state('currency', 'balances', 'some_address')
+print(f"State: {state}")
+
+# Create wallet and send transaction
+wallet = Wallet()  # or Wallet('your_private_key')
+xian = Xian('http://localhost:26657', wallet=wallet)
+result = xian.send(amount=10, to_address='recipient_address')
+```
+
+For full SDK docs (contracts, HD wallets, async) — see [xian-py](https://github.com/xian-network/xian-py).
+
 ## Resources
 
 - [xian-network/xian-stack](https://github.com/xian-network/xian-stack) — Docker setup
 - [xian-network/xian-core](https://github.com/xian-network/xian-core) — Core node
+- [xian-network/xian-py](https://github.com/xian-network/xian-py) — Python SDK
 - [CometBFT docs](https://docs.cometbft.com/) — Consensus engine
 - [xian.org](https://xian.org) — Project site
